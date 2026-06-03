@@ -1,13 +1,14 @@
 # Predictive Maintenance ML API
 
-Machine Learning project for predictive maintenance using Logistic Regression and Random Forest.
+Machine Learning project for predictive maintenance using Logistic Regression, Random Forest and a Neural Network (Keras).
 
 ## Features
 
-- Predict machine failures using machine learning
-- FastAPI prediction endpoint
-- Random Forest classification model
-- Classification metrics and confusion matrix
+- Predict machine failures based on sensor data
+- Three ML models trained and compared
+- FastAPI prediction endpoint with the best performing model
+- Classification metrics including Accuracy, Precision, Recall and F1-Score
+- Confusion matrix for visual evaluation
 - Interactive API documentation with Swagger UI
 
 ---
@@ -17,6 +18,7 @@ Machine Learning project for predictive maintenance using Logistic Regression an
 - Python
 - Pandas
 - Scikit-learn
+- TensorFlow / Keras
 - FastAPI
 - Uvicorn
 - Joblib
@@ -25,16 +27,14 @@ Machine Learning project for predictive maintenance using Logistic Regression an
 
 ## Project Overview
 
-This project predicts machine failures based on operating conditions and machine data.
+This project predicts machine failures based on sensor data from industrial machines.
 
 The workflow includes:
-- Data preprocessing with Pandas
-- Feature encoding
-- Machine learning with Scikit-learn
-- Model evaluation using classification metrics
-- Deployment with FastAPI
-
-The final deployed model uses a Random Forest Classifier.
+- Data preprocessing and feature engineering with Pandas
+- Training and comparing three ML models
+- Evaluating models with focus on Recall – missing a real failure is more costly than a false alarm
+- Saving the best model with Joblib
+- Deploying the model as a REST API with FastAPI
 
 ---
 
@@ -42,12 +42,11 @@ The final deployed model uses a Random Forest Classifier.
 
 1. Load and analyze the dataset
 2. Clean and preprocess the data
-3. Encode categorical features
+3. Encode categorical features (One-Hot Encoding)
 4. Split data into training and test sets
-5. Train machine learning models
-6. Evaluate model performance
-7. Save the trained model
-8. Deploy prediction API with FastAPI
+5. Train and evaluate three models: Logistic Regression, Random Forest, Neural Network
+6. Save the best model (Random Forest)
+7. Deploy prediction API with FastAPI
 
 ---
 
@@ -61,7 +60,13 @@ The final deployed model uses a Random Forest Classifier.
 - Accuracy: 98.45%
 - Recall (Failure Detection): 57%
 
-Random Forest achieved significantly better failure detection performance.
+### Neural Network (Keras)
+- Accuracy: ~97%
+- Recall (Failure Detection): ~31%
+
+Random Forest achieved the best failure detection performance and was selected for deployment.
+
+The dataset is highly imbalanced – only ~3.4% of machines fail. A model that always predicts "No Failure" would reach 96.6% accuracy while detecting zero actual failures. This is why Recall is the critical metric, not Accuracy.
 
 ---
 
